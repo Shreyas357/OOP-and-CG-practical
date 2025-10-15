@@ -1,0 +1,76 @@
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class RobustCalculator {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        boolean continueCalc = true;
+
+        System.out.println("=== Robust Java Calculator ===");
+
+        while (continueCalc) {
+            try {
+                System.out.print("\nEnter first number: ");
+                double num1 = sc.nextDouble();
+
+                System.out.print("Enter operator (+, -, *, /, %, ^): ");
+                char operator = sc.next().charAt(0);
+
+                System.out.print("Enter second number: ");
+                double num2 = sc.nextDouble();
+
+                double result = 0;
+                boolean valid = true;
+
+                // Conditional Logic for Operations
+                switch (operator) {
+                    case '+':
+                        result = num1 + num2;
+                        break;
+                    case '-':
+                        result = num1 - num2;
+                        break;
+                    case '*':
+                        result = num1 * num2;
+                        break;
+                    case '/':
+                        if (num2 == 0) {
+                            System.out.println("Error: Division by zero is not allowed!");
+                            valid = false;
+                        } else {
+                            result = num1 / num2;
+                        }
+                        break;
+                    case '%':
+                        result = num1 % num2;
+                        break;
+                    case '^':
+                        result = Math.pow(num1, num2);
+                        break;
+                    default:
+                        System.out.println("Invalid operator! Please use +, -, *, /, %, or ^");
+                        valid = false;
+                }
+
+                if (valid) {
+                    System.out.println("Result: " + result);
+                }
+
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter numeric values only.");
+                sc.nextLine(); // clear invalid input
+            }
+
+            // Loop control
+            System.out.print("\nDo you want to perform another calculation? (yes/no): ");
+            String choice = sc.next().toLowerCase();
+            if (!choice.equals("yes")) {
+                continueCalc = false;
+            }
+        }
+
+        System.out.println("\nCalculator closed. Thank you!");
+        sc.close();
+    }
+}
